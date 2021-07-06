@@ -18,8 +18,6 @@ include(CableCompilerSettings)
 include(CablePackage)
 include(CableToolchains)
 include(CMakePackageConfigHelpers)
-include(GNUInstallDirs)
-include(ProjectEVMC)
 
 cable_configure_toolchain(DEFAULT cxx17-pic)
 cable_set_build_type(DEFAULT Release CONFIGURATION_TYPES Release Debug)
@@ -28,6 +26,7 @@ include(Hunter/init)
 
 project(evmone LANGUAGES CXX)
 set(PROJECT_VERSION 0.4.1)
+include(GNUInstallDirs)
 
 string(REGEX MATCH "([0-9]+)\\.([0-9]+)" _ ${PROJECT_VERSION})
 set(PROJECT_VERSION_MAJOR ${CMAKE_MATCH_1})
@@ -40,6 +39,9 @@ endif()
 
 hunter_add_package(ethash)
 find_package(ethash CONFIG REQUIRED)
+hunter_add_package(evmc)
+find_package(evmc CONFIG REQUIRED)
+include(ProjectEVMC)
 
 option(EVMC_TOOLS "Build EVMC test tools" ${EVMONE_TESTING})
 option(EVMC_INSTALL "Install EVMC" OFF)

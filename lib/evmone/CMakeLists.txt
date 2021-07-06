@@ -3,6 +3,7 @@
 # Licensed under the Apache License, Version 2.0.
 
 include(LibraryTools)
+include(MergeStaticLibaries)
 
 hunter_add_package(intx)
 find_package(intx CONFIG REQUIRED)
@@ -18,8 +19,7 @@ add_library(evmone
     limits.hpp
     opcodes_helpers.h
 )
-target_link_libraries(evmone PUBLIC intx::intx ethash::keccak)
-target_link_libraries(evmone PRIVATE EVMC)
+target_link_libraries(evmone PUBLIC intx::intx ethash::keccak evmc)
 target_include_directories(evmone PUBLIC
     $<BUILD_INTERFACE:${include_dir}>$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
@@ -52,3 +52,4 @@ foreach(lib ${link_libraries})
 endforeach()
 
 # add_standalone_library(evmone)
+merge_static_library(evmone)
